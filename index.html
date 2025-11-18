@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Brasil Play Zaria</title>
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <!-- MAIN SITE (visível por baixo do login) -->
+  <div id="site-root" class="locked">
+    <header class="topbar">
+      <div class="brand">
+        <img src="LogoBPZ/Logo Zaria.png" alt="Logo Brasil Play Zaria" id="site-logo">
+        <div>
+          <h1>Brasil Play Zaria RPG</h1>
+          <small>Servidor RPG — SA-MP</small>
+        </div>
+      </div>
+      <nav>
+        <button id="nav-inicio">Início</button>
+        <button id="nav-forum">Fórum</button>
+        <button id="nav-cupons">Cupons</button>
+        <button id="nav-moedas">Comprar Moedas</button>
+        <button id="nav-veiculos">Veículos / Inventário</button>
+        <button id="nav-ids">Comprar ID</button>
+        <button id="nav-desban">Desbanimento</button>
+        <button id="nav-login" class="hidden">Entrar</button>
+        <button id="nav-logout" class="hidden">Sair</button>
+      </nav>
+    </header>
+
+    <main id="app">
+      <!-- Início -->
+      <section id="home-screen" class="card">
+        <h2 id="welcome-title">Bem-vindo ao Brasil Play Zaria</h2>
+        <p id="welcome-sub">Servidor RPG — Faça login para acessar loja, fórum e painel.</p>
+        <div class="grid-3">
+          <div class="panel">
+            <h3>Fórum</h3>
+            <p>Discuta com outros jogadores.</p>
+            <button data-nav="forum">Ir ao Fórum</button>
+          </div>
+          <div class="panel">
+            <h3>Cupons</h3>
+            <p>Insira cupons para descontos.</p>
+            <button data-nav="cupons">Usar Cupom</button>
+          </div>
+          <div class="panel">
+            <h3>Compras</h3>
+            <p>Moedas VIP, veículos e IDs.</p>
+            <button data-nav="moedas">Comprar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Forum -->
+      <section id="forum-screen" class="card hidden">
+        <h2>Fórum — Brasil Play Zaria</h2>
+        <div id="forum-area">
+          <div id="new-topic">
+            <input id="topic-title" placeholder="Título do tópico..." />
+            <textarea id="topic-body" placeholder="Escreva aqui..."></textarea>
+            <button id="post-topic">Postar tópico</button>
+          </div>
+          <div id="topics-list"></div>
+        </div>
+      </section>
+
+      <!-- Cupons -->
+      <section id="coupons-screen" class="card hidden">
+        <h2>Área de Cupons</h2>
+        <div class="row">
+          <input id="coupon-input" placeholder="Digite o código do cupom..." />
+          <button id="apply-coupon">Usar cupom</button>
+        </div>
+        <div id="coupon-result" class="muted"></div>
+        <div id="coupon-admin-area" class="hidden">
+          <h3>Lista de cupons (donos & influenciadores)</h3>
+          <ul id="coupon-list"></ul>
+        </div>
+        <div id="coupon-oculto-msg" class="muted">A lista de cupons está oculta — apenas donos e influenciadores podem visualizá-la.</div>
+      </section>
+
+      <!-- Comprar moedas VIP -->
+      <section id="coins-screen" class="card hidden">
+        <h2>Comprar Moedas VIP</h2>
+        <p>Taxa: <strong>1000 moedas = R$1,00</strong></p>
+        <label>Quantidade de moedas
+          <input type="number" id="coins-amount" min="1" value="1000" />
+        </label>
+        <div class="row">
+          <button id="coins-calc" class="secondary">Atualizar</button>
+          <button id="coins-finalize">Finalizar compra</button>
+        </div>
+        <div id="coins-result" class="panel muted"></div>
+        <h3>Pacotes rápidos</h3>
+        <div class="quick-packs">
+          <button class="pack" data-amount="1000">1000</button>
+          <button class="pack" data-amount="5000">5000</button>
+          <button class="pack" data-amount="10000">10000</button>
+        </div>
+      </section>
+
+      <!-- Veículos -->
+      <section id="vehicles-screen" class="card hidden">
+        <h2>Veículos / Inventário</h2>
+        <label>Selecione item
+          <select id="vehicle-select">
+            <option value="car1" data-price="120.00">Carro A — R$120.00</option>
+            <option value="car2" data-price="250.00">Carro B — R$250.00</option>
+            <option value="bike1" data-price="80.00">Moto A — R$80.00</option>
+            <option value="truck" data-price="400.00">Caminhão — R$400.00</option>
+          </select>
+        </label>
+        <div class="row">
+          <button id="buy-vehicle">Ver preço</button>
+          <button id="buy-vehicle-finalize">Finalizar compra</button>
+        </div>
+        <div id="vehicle-result" class="muted panel"></div>
+      </section>
+
+      <!-- IDs -->
+      <section id="ids-screen" class="card hidden">
+        <h2>Comprar ID</h2>
+        <label>Escolha o ID
+          <select id="id-select">
+            <option value="1" data-price="550.00">ID 1 — R$550.00</option>
+            <option value="2" data-price="490.00">ID 2 — R$490.00</option>
+            <option value="3" data-price="450.00">ID 3 — R$450.00</option>
+            <option value="4" data-price="420.00">ID 4 — R$420.00</option>
+            <option value="5" data-price="390.00">ID 5 — R$390.00</option>
+            <option value="6" data-price="350.00">ID 6 — R$350.00</option>
+            <option value="7" data-price="320.00">ID 7 — R$320.00</option>
+            <option value="8" data-price="290.00">ID 8 — R$290.00</option>
+            <option value="9" data-price="190.00">ID 9 — R$190.00</option>
+            <option value="10" data-price="150.00">ID 10 — R$150.00</option>
+          </select>
+        </label>
+        <div class="row">
+          <button id="calc-id-price" class="secondary">Atualizar</button>
+          <button id="id-finalize">Finalizar compra</button>
+        </div>
+        <div id="id-price-result" class="panel muted"></div>
+      </section>
+
+      <!-- Desbanimento -->
+      <section id="desban-screen" class="card hidden">
+        <h2>Pedido de Desbanimento</h2>
+        <form id="desban-form">
+          <label>Nick banido
+            <input type="text" id="desban-nick" required />
+          </label>
+          <label>Motivo / justificativa
+            <textarea id="desban-just" required></textarea>
+          </label>
+          <button type="submit">Enviar pedido</button>
+        </form>
+        <div id="desban-result" class="muted"></div>
+      </section>
+
+      <footer class="footer">
+        <small>Brasil Play Zaria — Servidor RPG • Agradece sua preferencia.<strong></strong></small>
+      </footer>
+    </main>
+  </div>
+
+  <!-- LOGIN OVERLAY (menor box, vidro/desfocado) -->
+  <div id="login-overlay" class="overlay">
+    <div class="login-card">
+      <!-- New auth UI: toggle + forms -->
+      <div class="auth-toggle">
+        <div class="toggle-labels">
+          <button class="toggle-btn active" data-mode="login">Entrar</button>
+          <button class="toggle-btn" data-mode="signup">Registrar</button>
+        </div>
+        <div class="toggle-knob" aria-hidden="true">
+          <div class="knob"></div>
+        </div>
+      </div>
+
+      <div class="auth-forms">
+        <!-- LOGIN -->
+        <form id="form-login" class="auth-form" onsubmit="return false;">
+          <h2>Entrar</h2>
+
+          <label class="input-icon">
+            <span class="icon">@</span>
+            <input id="login-nick" type="text" placeholder="Nick" />
+          </label>
+
+          <label class="input-icon">
+            <span class="icon">🔒</span>
+            <input id="login-pass" type="password" placeholder="Senha" />
+          </label>
+
+          <div class="row" style="justify-content:center;margin-top:8px;">
+            <button id="login-btn" class="primary">Entrar</button>
+          </div>
+        </form>
+
+        <!-- SIGNUP -->
+        <form id="form-signup" class="auth-form" onsubmit="return false;">
+          <h2>Registrar</h2>
+
+          <label class="input-icon">
+            <span class="icon">@</span>
+            <input id="signup-nick" type="text" placeholder="Nick (SAMP)" />
+          </label>
+
+          <label class="input-icon">
+            <span class="icon">🔒</span>
+            <input id="signup-pass" type="password" placeholder="Senha" />
+          </label>
+
+          <div class="row" style="justify-content:center;margin-top:8px;">
+            <button id="register-btn" class="primary">Registrar</button>
+          </div>
+        </form>
+      </div>
+
+      <p class="muted small" style="margin-top:12px;">Ao entrar você terá acesso à loja e painel — boas-vindas!</p>
+    </div>
+  </div>
+
+  <!-- Modal (reutilizável) -->
+  <div id="modal-backdrop" class="hidden" aria-hidden="true">
+    <div class="modal-smoke"></div>
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" id="modal-close" aria-label="Fechar">✕</button>
+      <h3 id="modal-title">Finalizar compra</h3>
+      <div id="modal-body">
+        <p class="muted">CPF para pagamento: <strong>Em Breve</strong></p>
+        <p id="modal-desc" class="muted"></p>
+        <label>Enviar comprovante (imagem ou PDF)
+          <input type="file" id="modal-proof" accept="image/*,application/pdf" />
+        </label>
+        <div class="row" style="justify-content:flex-end;margin-top:10px;">
+          <button id="modal-send">Enviar comprovação</button>
+        </div>
+        <div id="modal-result" class="muted" style="margin-top:8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
